@@ -3,22 +3,24 @@
 
 ## Introduction
 
-This repository contains molecular simulation input files, scripts, and output data
- for computing the hydration free energies (ΔG_hyd) of linear alkanes (C1–C20) in water, 
- with hexane (C6) used as an example system.
+This repository contains molecular simulation input files, scripts, and output
+ data for computing the hydration free energies (ΔG_hyd) of linear alkanes
+ (C1–C20) in water. Simulations were conducted using various water models,
+ 3-site (SPC/E, OPC3) and 4-site (TIP4P/2005, OPC) as well as different alkane
+ force fields (TraPPE-UA, HH-Alkane), with hexane (C6) used as an example system.
 
-The simulations are performed using free energy perturbation (FEP) methods with the
- HH-Alkane force field and the TIP4P/2005 water model. Both shifted and unshifted
- Lennard-Jones potentials are included to evaluate the impact of potential truncation
- methods on calculated free energies.
+An additional set of simulations using the HH-Alkane force field and TIP4P/2005
+ water model was also performed to examine the effect of potential shifting. Both
+ shifted and unshifted Lennard-Jones potentials were applied to assess the impact
+ of truncation methods on the calculated hydration free energies.
 
 ---
 
-##️ Methodology
+## Methodology
 
 - **Simulation engine:** LAMMPS  
-- **Force field:** HH-Alkane (united atom)  
-- **Water model:** TIP4P/2005  
+- **Force field:** HH-Alkane (united atom) and TraPPE-UA   
+- **Water model:** 3-site models (SPC/E, OPC3) and 4-site models (TIP4P/2005, OPC)  
 - **Free energy method:** FEP with soft-core Lennard-Jones potential
 
 The hydration free energy is calculated by gradually turning off interactions
@@ -31,7 +33,7 @@ The hydration free energy is calculated by gradually turning off interactions
 ```
 Alkane_FEP_Calc    #alkane-hydration-free-energy/
 │
-├── Shifted/ # Subfolder for shifted potential C6 (Hexane)
+├── (OPC) + (TraPPE-UA)
 │ ├── fep01/ # forward path (lambda 0 to 1)
 │ │ ├── fep01_result.fep/ # result output file 
 │ │ ├── input_script.in/  # FEP simulation input scripts
@@ -41,12 +43,53 @@ Alkane_FEP_Calc    #alkane-hydration-free-energy/
 │   ├── input_script.in/  # FEP simulation input scripts
 │   └── output_slurm.out/ # Simulation outputs
 │
-├── Unshifted/ # Subfolder for unshifted potential C6 (Hexane)
-│ ├── fep01/   # forward path (lambda 0 to 1)
+├── (OPC3) + (TraPPE-UA)
+│ ├── fep01/ # forward path (lambda 0 to 1)
 │ │ ├── fep01_result.fep/ # result output file 
 │ │ ├── input_script.in/  # FEP simulation input scripts
 │ │ └── output_slurm.out/ # Simulation outputs
-│ └── fep10/   # backward path (lambda 1 to 0)
+│ └── fep10/ # backward path (lambda 1 to 0)
+│	├── fep01_result.fep/ # result output file 
+│   ├── input_script.in/  # FEP simulation input scripts
+│   └── output_slurm.out/ # Simulation outputs
+│
+├── (SPCE) + (TraPPE-UA)
+│ ├── fep01/ # forward path (lambda 0 to 1)
+│ │ ├── fep01_result.fep/ # result output file 
+│ │ ├── input_script.in/  # FEP simulation input scripts
+│ │ └── output_slurm.out/ # Simulation outputs
+│ └── fep10/ # backward path (lambda 1 to 0)
+│	├── fep01_result.fep/ # result output file 
+│   ├── input_script.in/  # FEP simulation input scripts
+│   └── output_slurm.out/ # Simulation outputs
+│
+├── (TIP4P2005) + (HH-Alkane) # includes shifting effect
+│  ├── Shifted/ # Subfolder for shifted potential C6 (Hexane)
+│  │ ├── fep01/ # forward path (lambda 0 to 1)
+│  │ │ ├── fep01_result.fep/ # result output file 
+│  │ │ ├── input_script.in/  # FEP simulation input scripts
+│  │ │ └── output_slurm.out/ # Simulation outputs
+│  │ └── fep10/ # backward path (lambda 1 to 0)
+│  │	├── fep01_result.fep/ # result output file 
+│  │   ├── input_script.in/  # FEP simulation input scripts
+│  │   └── output_slurm.out/ # Simulation outputs
+│  │
+│  └── Unshifted/ # Subfolder for unshifted potential C6 (Hexane)
+│    ├── fep01/   # forward path (lambda 0 to 1)
+│    │ ├── fep01_result.fep/ # result output file 
+│    │ ├── input_script.in/  # FEP simulation input scripts
+│    │ └── output_slurm.out/ # Simulation outputs
+│    └── fep10/   # backward path (lambda 1 to 0)
+│   	├── fep01_result.fep/ # result output file 
+│       ├── input_script.in/  # FEP simulation input scripts
+│       └── output_slurm.out/ # Simulation outputs
+│   
+├── (TIP4P2005) + (TraPPE-UA)
+│ ├── fep01/ # forward path (lambda 0 to 1)
+│ │ ├── fep01_result.fep/ # result output file 
+│ │ ├── input_script.in/  # FEP simulation input scripts
+│ │ └── output_slurm.out/ # Simulation outputs
+│ └── fep10/ # backward path (lambda 1 to 0)
 │	├── fep01_result.fep/ # result output file 
 │   ├── input_script.in/  # FEP simulation input scripts
 │   └── output_slurm.out/ # Simulation outputs
@@ -131,4 +174,5 @@ Ohio University
 yr9770@gmail.com
 
 ---
+
 
